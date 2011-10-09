@@ -12,6 +12,8 @@ opera.addEventListener('BeforeEvent.DOMContentLoaded', function() {
 
 	var BolkMJpeg = function (url, img) {
 		var req = new XMLHttpRequest(); 
+		var hnd = null;
+
 		img.src = 'about:blank'; // Сброс картинки, чтобы прекратить передачу
 
 		// Асинхронно забираем кадр при помощи XHR, нам придёт видеопоток
@@ -40,7 +42,7 @@ opera.addEventListener('BeforeEvent.DOMContentLoaded', function() {
 		// На изменение состояние входных данных собираем по частям JPEG
 		req.onreadystatechange = function () {
 			// состояние «3» — данные пошли, но ещё не кончились
-			if (req.readyState === 3) {
+			if (req.readyState === 3 && hnd === null) {
 				var hnd = setInterval(function () {
 					// по заголовку получаем размер данных
 					var header = unescape(reqbytes(0, 300)).toLowerCase();
@@ -68,7 +70,7 @@ opera.addEventListener('BeforeEvent.DOMContentLoaded', function() {
 								resp = resp.substr(headend, len);
 
 								draw(resp);
-								clearInterval(hnd);
+								clearInterval(hnd), hnd = null;
 
 								start(url);
 							}
