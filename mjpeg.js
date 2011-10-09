@@ -39,10 +39,10 @@ opera.addEventListener('BeforeEvent.DOMContentLoaded', function() {
 			img.src = 'data:image/jpeg,' + bin;
 		}
 
-		// На изменение состояние входных данных собираем по частям JPEG
+		// На изменение состояния входных данных собираем по частям JPEG
 		req.onreadystatechange = function () {
 			// состояние «3» — данные пошли, но ещё не кончились
-			if (req.readyState === 3 && hnd === null) {		
+			if (req.readyState === 3 && hnd === null) {
 				hnd = setInterval(function () {
 					// по заголовку получаем размер данных
 					var header = unescape(reqbytes(0, 300)).toLowerCase();
