@@ -10,6 +10,7 @@
 opera.addEventListener('BeforeEvent.DOMContentLoaded', function() {
 	if (opera.version() < 12) return;
 
+
 	var BolkMJpeg = function (url, img) {
 		var req = new XMLHttpRequest(); 
 		var hnd = null;
@@ -28,10 +29,9 @@ opera.addEventListener('BeforeEvent.DOMContentLoaded', function() {
 		// получаем просто последовательность байт
 		var reqbytes = function (n, l) {
 			return escape(req.response.substr(n, l)).
-				replace(/([^%]|%[^u].|%u....)/g, '<$1>').
-				replace(/<%u(..)(..)>/g, '%$2%$1').
-				replace(/<%(..)>/g, '%$1%00').
-				replace(/<(.)>/g, '$1%00');
+                   replace(/([^%]|%[^u].|%u....)/g, '?$1').
+                   replace(/\?%u(..)(..)/g, '%$2%$1').
+                   replace(/\?(%..|.)/g, '$1%00');
 		}
 
 		// заменяем картинку на бинарные данные
@@ -42,8 +42,8 @@ opera.addEventListener('BeforeEvent.DOMContentLoaded', function() {
 		// На изменение состояние входных данных собираем по частям JPEG
 		req.onreadystatechange = function () {
 			// состояние «3» — данные пошли, но ещё не кончились
-			if (req.readyState === 3 && hnd === null) {
-				var hnd = setInterval(function () {
+			if (req.readyState === 3 && hnd === null) {		
+				hnd = setInterval(function () {
 					// по заголовку получаем размер данных
 					var header = unescape(reqbytes(0, 300)).toLowerCase();
 
@@ -76,7 +76,7 @@ opera.addEventListener('BeforeEvent.DOMContentLoaded', function() {
 							}
 						}
 					}
-				}, 100);
+				}, 300);
 			}
 		}
 
