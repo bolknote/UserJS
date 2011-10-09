@@ -40,7 +40,6 @@ opera.addEventListener('BeforeEvent.DOMContentLoaded', function() {
 		// На изменение состояние входных данных собираем по частям JPEG
 		req.onreadystatechange = function () {
 			// состояние «3» — данные пошли, но ещё не кончились
-			console.log(req.readyState);
 			if (req.readyState === 3) {
 				var hnd = setInterval(function () {
 					// по заголовку получаем размер данных
