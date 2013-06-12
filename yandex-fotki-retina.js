@@ -4,7 +4,7 @@
 // ==/UserScript==
 (function () {
 	function $(sel, attrs) {
-		var os = document.querySelectorAll(sel);
+		var os = typeof sel == "object" ? [sel] : document.querySelectorAll(sel);
 		for (var e = 0, l = os.length; e < l; e++) {
 			var o = os[e];
 			for (var i in attrs) {
@@ -42,16 +42,19 @@
 		width: '80px',
 		height: '17px',
 	});
-	$(".user100 img", {
+	var img = $(":-webkit-any(.user100, .b-userpic-small) img", {
 		width: '40px',
 		height: '40px',
 		float: 'left',
 	});
-	var img = document.querySelector(".user100 img");
+
 	if (img && img.src.substr(-6) == '-small') {
 		img.src = img.src.substr(0, 84) + 'normal';
+		$(img, {
+			width: '20px',
+			height: '20px',
+		});
 	}
-
 	$(".b-round", {
 		display: 'none',
 	});
